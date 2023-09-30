@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# setup safe directories for submodules
-SUBMODULE_DIRS=$(git config --file .gitmodules --get-regexp path | awk '{ print $2 }')
-for DIR in $SUBMODULE_DIRS; do 
-  git config --global --add safe.directory "$PWD/$DIR"
-done
+# setup safe directories for repo and submodules
+ADD_SAFE=git config --global --add safe.directory
+
+$ADD_SAFE $(pwd)
+git submodule foreach "$ADD_SAFE \$(pwd)"
